@@ -20,8 +20,8 @@ public class X implements Shapes {
     private void createGeometry() {
         //Create an x as 3D
         Geometry3D x = null;
-        Geometry3D box1 = csg.box3D(10, 1, 1, true);
-        Geometry3D box2 = csg.box3D(1, 10, 1, true);
+        Geometry3D box1 = csg.box3D(10, 2, 1, true);
+        Geometry3D box2 = csg.box3D(2, 10, 1, true);
         x = csg.union3D(box1, box2);
         setGeometry3D(x);
         this.translate(5,5,0);

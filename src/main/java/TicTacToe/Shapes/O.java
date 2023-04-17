@@ -21,7 +21,7 @@ public class O implements Shapes {
         //Create an O as 3D
         Geometry3D o = null;
         Geometry3D base = csg.cylinder3D(10, 1, 64, true);
-        Geometry3D center = csg.cylinder3D(8, 1, 64, true);
+        Geometry3D center = csg.cylinder3D(6, 1, 64, true);
         o = csg.difference3D(base, center);
         setGeometry3D(o);
     }
