@@ -41,7 +41,7 @@ public class TicTacToeStairs {
         uppestPlate = csg.translate3D(50, 10,0).transform(uppestPlate);
 
         var lowerPlate = csg.box3D(20, 20, 15, false);
-        lowerPlate = csg.translate3D(10, 50,5).transform(lowerPlate);
+        lowerPlate = csg.translate3D(10, 50,7).transform(lowerPlate);
 
 
 
