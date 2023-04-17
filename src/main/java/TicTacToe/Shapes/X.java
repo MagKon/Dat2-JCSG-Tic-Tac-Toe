@@ -6,7 +6,7 @@ import org.abstractica.javacsg.Geometry3D;
 import org.abstractica.javacsg.JavaCSG;
 
 public class X implements Shapes {
-    private Geometry2D geometry;
+    private Geometry3D geometry;
     private final JavaCSG csg;
     private double width = 5;
     private double height = 10;
@@ -18,30 +18,37 @@ public class X implements Shapes {
     }
 
     private void createGeometry() {
-        setGeometry2D(csg.char2D('x', width, height, resolution));
+        //Create an x as 3D
+        Geometry3D x = null;
+        Geometry3D box1 = csg.box3D(10, 2, 1, true);
+        Geometry3D box2 = csg.box3D(2, 10, 1, true);
+        x = csg.union3D(box1, box2);
+        setGeometry3D(x);
+        this.translate(5,5,0);
     }
 
     @Override
     public Geometry2D getGeometry2D() {
-        return this.geometry;
-    }
-
-    @Override
-    public void setGeometry2D(Geometry2D geometry) {
-        this.geometry = geometry;
-    }
-
-    @Override
-    public Geometry3D getGeometry3D() {
         return null;
     }
 
     @Override
+    public void setGeometry2D(Geometry2D geometry) {
+
+    }
+
+    @Override
+    public Geometry3D getGeometry3D() {
+        return geometry;
+    }
+
+    @Override
     public void setGeometry3D(Geometry3D geometry) {
+        this.geometry = geometry;
     }
 
     @Override
     public void translate(double x, double y, double z) {
-        this.geometry = csg.translate2D(x, y).transform(getGeometry2D());
+        this.geometry = csg.translate3D(x, y, z).transform(getGeometry3D());
     }
 }

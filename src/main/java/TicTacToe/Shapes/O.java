@@ -6,7 +6,7 @@ import org.abstractica.javacsg.Geometry3D;
 import org.abstractica.javacsg.JavaCSG;
 
 public class O implements Shapes {
-    private Geometry2D geometry;
+    private Geometry3D geometry;
     private final JavaCSG csg;
     private double width = 5;
     private double height = 10;
@@ -18,30 +18,36 @@ public class O implements Shapes {
     }
 
     private void createGeometry() {
-        setGeometry2D(csg.char2D('o', width, height, resolution));
+        //Create an O as 3D
+        Geometry3D o = null;
+        Geometry3D base = csg.cylinder3D(10, 1, 64, true);
+        Geometry3D center = csg.cylinder3D(6, 1, 64, true);
+        o = csg.difference3D(base, center);
+        setGeometry3D(o);
     }
 
     @Override
     public Geometry2D getGeometry2D() {
-        return this.geometry;
-    }
-
-    @Override
-    public void setGeometry2D(Geometry2D geometry) {
-        this.geometry = geometry;
-    }
-
-    @Override
-    public Geometry3D getGeometry3D() {
         return null;
     }
 
     @Override
+    public void setGeometry2D(Geometry2D geometry) {
+
+    }
+
+    @Override
+    public Geometry3D getGeometry3D() {
+        return this.geometry;
+    }
+
+    @Override
     public void setGeometry3D(Geometry3D geometry) {
+        this.geometry = geometry;
     }
 
     @Override
     public void translate(double x, double y, double z) {
-        this.geometry = csg.translate2D(x, y).transform(getGeometry2D());
+        this.geometry = csg.translate3D(x, y,z).transform(getGeometry3D());
     }
 }
