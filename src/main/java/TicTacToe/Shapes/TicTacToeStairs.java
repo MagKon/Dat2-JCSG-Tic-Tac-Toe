@@ -12,8 +12,6 @@ public class TicTacToeStairs {
     public Geometry3D GeneratePlate(JavaCSG csg) {
         Geometry3D product = null;
 
-        JavaCSG csg = JavaCSGFactory.createDefault();
-
         Geometry3D plate = csg.box3D(60, 60, 10, false);
         plate = csg.translate3D(30, 30,0).transform(plate);
         Geometry3D plate2 = csg.box3D(25, 25, 15, false);
@@ -40,32 +38,47 @@ public class TicTacToeStairs {
         var uppestPlate = csg.box3D(20, 20, 25, false);
         uppestPlate = csg.translate3D(50, 10,0).transform(uppestPlate);
 
-        var lowerPlate = csg.box3D(20, 20, 15, false);
-        lowerPlate = csg.translate3D(10, 50,7).transform(lowerPlate);
+        var lowerPlate = csg.box3D(22, 22, 15, false);
+        lowerPlate = csg.translate3D(9, 51,5).transform(lowerPlate);
 
 
 
-        var removeVol = csg.box3D(18, 18, 21, false);
-        removeVol = csg.translate3D(50, 30,8).transform(removeVol);
+        var removeVol = csg.box3D(18, 18, 20, false);
 
         var union = csg.union3D(plate, unionPlate2,upperUnion, uppestPlate);
 
 
         // removevols
 
-        var lowestPlate = csg.box3D(18, 18, 5, false);
-        lowestPlate = csg.translate3D(10, 50,5).transform(lowestPlate);
+        union = csg.difference3D(union, lowerPlate);
 
-        var newUnion = csg.difference3D(union, lowestPlate);
-        newUnion = csg.difference3D(union, lowerPlate);
+        union = Test.volRemove(9,51,5, union);
 
+        union = Test.volRemove(10,50,3, union);
+        union = Test.volRemove(30,50,8, union);
+        union = Test.volRemove(50,50,14,union);
 
-        removeVol = csg.translate3D(30,10,5).transform(removeVol);
-        newUnion = csg.difference3D(newUnion, removeVol);
-        product = newUnion;
+        // second layer
+        union = Test.volRemove(10,30,8, union);
+        union = Test.volRemove(30,30,13,union);
+        union = Test.volRemove(50,30,18,union);
 
+        // third layer
+        union = Test.volRemove(10,10,13, union);
+        union = Test.volRemove(30,10,18, union);
+        union = Test.volRemove(50,10,23,union);
+
+        product = union;
 
         return product;
+    }
+
+    public static Geometry3D volRemove (int x,int y,int z, Geometry3D union) {
+        JavaCSG csg = JavaCSGFactory.createDefault();
+        var removeVol = csg.box3D(18, 18, 20, false);
+        removeVol = csg.translate3D(x,y,z).transform(removeVol);
+        union = csg.difference3D(union, removeVol);
+        return union;
     }
 
     public Geometry2D GenerateBricks(JavaCSG csg) {
