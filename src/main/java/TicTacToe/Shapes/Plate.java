@@ -5,7 +5,7 @@ import org.abstractica.javacsg.JavaCSG;
 
 public class Plate implements Shapes {
     private Geometry3D geometry;
-    private JavaCSG csg;
+    private final JavaCSG csg;
 
     public Plate(JavaCSG csg) {
         this.csg = csg;
@@ -71,7 +71,7 @@ public class Plate implements Shapes {
         union = volRemove(30,10,18, union);
         union = volRemove(50,10,23,union);
 
-        plate = union;
+        platefinal = union;
         setGeometry3D(platefinal);
     }
 
@@ -84,12 +84,12 @@ public class Plate implements Shapes {
 
     @Override
     public Geometry3D getGeometry3D() {
-        return null;
+        return this.geometry;
     }
 
     @Override
     public void setGeometry3D(Geometry3D geometry) {
-
+        this.geometry = geometry;
     }
 
     @Override

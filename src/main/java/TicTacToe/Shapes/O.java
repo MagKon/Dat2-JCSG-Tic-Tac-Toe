@@ -27,16 +27,6 @@ public class O implements Shapes {
     }
 
     @Override
-    public Geometry2D getGeometry2D() {
-        return null;
-    }
-
-    @Override
-    public void setGeometry2D(Geometry2D geometry) {
-
-    }
-
-    @Override
     public Geometry3D getGeometry3D() {
         return this.geometry;
     }

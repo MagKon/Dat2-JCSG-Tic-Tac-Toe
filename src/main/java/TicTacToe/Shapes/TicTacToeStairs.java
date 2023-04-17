@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class TicTacToeStairs {
+    private int amountOfBricks = 3;
+
     public Geometry3D GeneratePlate(JavaCSG csg) {
-        Geometry3D product = null;
+        Geometry3D product;
 
         Shapes plate = new Plate(csg);
 
@@ -19,25 +21,26 @@ public class TicTacToeStairs {
         return product;
     }
 
-    public static Geometry3D volRemove (int x,int y,int z, Geometry3D union) {
-        JavaCSG csg = JavaCSGFactory.createDefault();
-        var removeVol = csg.box3D(18, 18, 20, false);
-        removeVol = csg.translate3D(x,y,z).transform(removeVol);
-        union = csg.difference3D(union, removeVol);
-        return union;
-    }
+    public Geometry3D GenerateBricks(JavaCSG csg) {
+        Geometry3D product = null;
+        int translater = 20;
 
-    public Geometry2D GenerateBricks(JavaCSG csg) {
-        Geometry2D product = null;
-        Shapes x1 = new TicTacToe.Shapes.X(csg);
 
-        Shapes o1 = new TicTacToe.Shapes.O(csg);
-        o1.translate(10, 0, 0);
-        //convert 2d to 3d
-        o1.getGeometry2D();
+        for (int i = 0; i < amountOfBricks; i++) {
+            Geometry3D newProduct = null;
+            Shapes x = new X(csg);
+            x.translate(0,5,0);
+            Shapes o = new O(csg);
 
-        product = csg.union2D(x1.getGeometry2D(), o1.getGeometry2D());
+            newProduct = csg.union3D(x.getGeometry3D(), o.getGeometry3D());
+            if (product != null)
+                product = csg.union3D(newProduct, product);
+            else
+                product = newProduct;
+            product = csg.translate3D(translater, 0, 0).transform(product);
+        }
 
+        product = csg.translate3D(0, 80, 0).transform(product);
         return product;
     }
 
